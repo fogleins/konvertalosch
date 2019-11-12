@@ -2,11 +2,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+void sch(char* sztring);
+
 int main() {
     /// itt elég csúnya :(
-    char sztring[2048];
+    char string[2048];
     printf("Add meg a szoveget: ");
-    gets(sztring);
+    gets(string);
+    sch(string);
+    return 0;
+}
+
+void sch(char* sztring) {
     int n = strlen(sztring);
     int hossz = 0;
     for (int i = 1; i < n; ++i) {
@@ -29,7 +36,7 @@ int main() {
             ujsztring[indexer += 1] = sztring[i += 1];
             indexer++;
         }
-        // ha simán 's' van
+            // ha simán 's' van
         else if ((sztring[i] == 's') || (sztring[i] == 'S')) {
             ujsztring[indexer] = sztring[i];
             ujsztring[indexer += 1] = 'c';
@@ -47,5 +54,4 @@ int main() {
         printf("%c", ujsztring[kiiridx]);
         kiiridx++;
     }
-    return 0;
 }
