@@ -25,7 +25,6 @@ void sch(char* sztring) {
             hossz++;
     }
     char* ujsztring = (char*) malloc((hossz + 1) * sizeof(char));
-    int csuszas = 0; /*ennyivel kell majd eltolni a karaktereket*/
     int indexer = 0;
     for (int i = 0; sztring[i] != '\0'; ++i) {
         // ha 'sz'
@@ -36,7 +35,7 @@ void sch(char* sztring) {
             ujsztring[indexer += 1] = sztring[i += 1];
             indexer++;
         }
-            // ha simán 's' van
+        // ha simán 's' van
         else if ((sztring[i] == 's') || (sztring[i] == 'S')) {
             ujsztring[indexer] = sztring[i];
             ujsztring[indexer += 1] = 'c';
