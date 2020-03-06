@@ -5,6 +5,6 @@
 #ifndef KONVERTALOSCH_MAIN_H
 #define KONVERTALOSCH_MAIN_H
 
-void sch(char* sztring);
+void sch();
 
 #endif //KONVERTALOSCH_MAIN_H

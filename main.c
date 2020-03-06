@@ -1,56 +1,62 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <stdbool.h>
 
-void sch(char* sztring);
+#include "main.h"
 
 int main() {
-    /// itt elég csúnya :(
-    char string[2048];
-    printf("Add meg a szoveget: ");
-    gets(string);
-    sch(string);
-    return 0;
+    bool fajlbol;
+    int valasztaschar = 'a';
+    while (valasztaschar != 'i' || valasztaschar != 'n') {
+        printf("Fajlbol szeretnel beolvasni? (Ha nem, itt kell majd megadni a szoveget.) (i/n):");
+        valasztaschar = getchar();
+        if (valasztaschar == 'i')
+            fajlbol = true;
+        else if (valasztaschar == 'n')
+            fajlbol = false;
+        if (valasztaschar == 'i' || valasztaschar == 'n')
+            break;
+        else
+            valasztaschar = getchar();
+    }
+
+    if (!fajlbol) {
+        sch();
+    }
+
+    return  0;
 }
 
-void sch(char* sztring) {
-    int n = strlen(sztring);
-    int hossz = 0;
-    for (int i = 1; i < n; ++i) {
-        if (sztring[i - 1] == 's' && sztring[i] == 'z')
-            hossz++;
-        else if (sztring[i - 1] == 's' && sztring[i] != 'z')
-            hossz += 2;
-        else
-            hossz++;
-    }
-    char* ujsztring = (char*) malloc((hossz + 1) * sizeof(char));
-    int indexer = 0;
-    for (int i = 0; sztring[i] != '\0'; ++i) {
-        // ha 'sz'
-        if ((sztring[i] == 's' && sztring[i + 1] == 'z')
-            || (sztring[i] == 'S' && sztring[i + 1] == 'z')
-            || (sztring[i] == 'S' && sztring[i + 1] == 'Z')) {
-            ujsztring[indexer] = sztring[i];
-            ujsztring[indexer += 1] = sztring[i += 1];
-            indexer++;
+typedef enum Allapot {
+    s_volt,
+    egyeb
+    /* TODO
+     * c_volt cs esetére
+     * z_volt zs
+     * dzs
+     */
+} Allapot;
+
+void sch() {
+    printf("Add meg a sztringet:");
+    Allapot a = egyeb;
+    int c;
+    while ((c = getchar()) != EOF) {
+        switch (a) {
+            case egyeb:
+                if (c == 's' || c == 'S')
+                    a = s_volt;
+                putchar(c);
+                break;
+            case s_volt:
+                if (c == 'z' || c == 'Z')
+                    a = egyeb;
+                else {
+                    // hatékonyabb, mint 2 putchar?
+                    printf("ch");
+                    a = egyeb;
+                }
+                putchar(c);
+                break;
         }
-        // ha simán 's' van
-        else if ((sztring[i] == 's') || (sztring[i] == 'S')) {
-            ujsztring[indexer] = sztring[i];
-            ujsztring[indexer += 1] = 'c';
-            ujsztring[indexer += 1] = 'h';
-            indexer++;
-        }
-        else {
-            ujsztring[indexer] = sztring[i];
-            indexer++;
-        }
-    }
-    ujsztring[indexer] = '\0';
-    int kiiridx = 0;
-    while (ujsztring[kiiridx] != '\0') {
-        printf("%c", ujsztring[kiiridx]);
-        kiiridx++;
     }
 }

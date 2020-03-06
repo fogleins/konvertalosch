@@ -3,4 +3,4 @@ project(konvertalosch C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(konvertalosch main.c)
+add_executable(konvertalosch main.c main.h)
