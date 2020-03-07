@@ -5,6 +5,6 @@
 #ifndef KONVERTALOSCH_MAIN_H
 #define KONVERTALOSCH_MAIN_H
 
-void sch();
+void sch(FILE* forras);
 
 #endif //KONVERTALOSCH_MAIN_H
