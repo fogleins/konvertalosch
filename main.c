@@ -21,23 +21,15 @@ int main(int argc, char* args[]) {
         sch(fajl);
         fclose(fajl);
     }
-    else sch(stdin);
+    else {
+        printf("Add meg a sztringet: ");
+        sch(stdin);
+    }
 
     return  0;
 }
 
-typedef enum Allapot {
-    s_volt,
-    egyeb
-    /* TODO
-     * c_volt cs esetére
-     * z_volt zs
-     * dzs
-     */
-} Allapot;
-
 void sch(FILE* forras) {
-    printf("Add meg a sztringet:");
     Allapot a = egyeb;
     int c;
     while ((c = getc(forras)) != EOF) {
@@ -45,15 +37,33 @@ void sch(FILE* forras) {
             case egyeb:
                 if (c == 's' || c == 'S')
                     a = s_volt;
+                else if (c == 'c' || c == 'C')
+                    a = c_volt;
+                else if (c == 'z' || c == 'Z')
+                    a = z_volt;
                 putchar(c);
                 break;
             case s_volt:
-                if (c == 'z' || c == 'Z')
-                    a = egyeb;
-                else {
-                    puts("ch");
-                    a = egyeb;
+                switch (c) {
+                    case 's':
+                    case 'S':
+                    case 'z':
+                    case 'Z':
+                        break;
+                    default:
+                        puts("ch");
+                        a = egyeb;
+                        break;
                 }
+                putchar(c);
+                break;
+            case z_volt:
+            case c_volt:
+                if (c == 'c' || c == 'C')
+                    a = c_volt;
+                else if (c == 'z' || c == 'Z')
+                    a = z_volt;
+                else a = egyeb;
                 putchar(c);
                 break;
         }

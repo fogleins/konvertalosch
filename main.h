@@ -5,6 +5,13 @@
 #ifndef KONVERTALOSCH_MAIN_H
 #define KONVERTALOSCH_MAIN_H
 
+typedef enum Allapot {
+    s_volt,
+    c_volt,
+    z_volt,
+    egyeb
+} Allapot;
+
 void sch(FILE* forras);
 
 #endif //KONVERTALOSCH_MAIN_H
