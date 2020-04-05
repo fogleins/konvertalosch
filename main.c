@@ -47,8 +47,10 @@ void sch(FILE* forras, FILE* cel) {
                 switch (c) {
                     case 's':
                     case 'S':
+                        break;
                     case 'z':
                     case 'Z':
+                        a = egyeb;
                         break;
                     default:
                         fputs("ch", cel);
