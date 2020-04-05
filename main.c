@@ -1,29 +1,54 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "main.h"
 
 int main(int argc, char* args[]) {
     puts("Konvertalosch v2\n");
 
-    int valasztaschar;
-    printf("Fajlbol szeretnel beolvasni a szoveget? (i/n):");
-    valasztaschar = getchar();
-    while (valasztaschar != 'i' && valasztaschar != 'n') {
-        getchar(); // entert elnyeli
-        printf("Fajlbol szeretnel beolvasni a szoveget? (i/n):");
-        valasztaschar = getchar();
-    }
-    if (valasztaschar == 'i') {
-        char fajlnev[50];
-        printf("Adja meg a fajl nevet: ");
-        gets(fajlnev);
-        FILE* fajl = fopen(fajlnev, "rt");
-        sch(fajl, stdout);
-        fclose(fajl);
+    char bemeneti_fajlnev[128] = {'\0'};
+    char kimeneti_fajlnev[128] = {'\0'};
+
+    if (argc >= 3 && strcmp(args[1], "-b") == 0) strcpy(bemeneti_fajlnev, args[2]);
+    else if (argc == 3 && strcmp(args[1], "-k") == 0) strcpy(kimeneti_fajlnev, args[2]);
+    if (argc == 5 && strcmp(args[3], "-k") == 0) strcpy(kimeneti_fajlnev, args[4]);
+
+    if (bemeneti_fajlnev[0] != '\0') {
+        FILE* bemeneti_fajl = fopen(bemeneti_fajlnev, "rt");
+        printf("Reading from file %s", bemeneti_fajlnev);
+        if (kimeneti_fajlnev[0] != '\0') {
+            FILE* kimeneti_fajl = fopen(kimeneti_fajlnev, "wt");
+            printf(", writing to file %s\n", kimeneti_fajlnev);
+            sch(bemeneti_fajl, kimeneti_fajl);
+            fclose(kimeneti_fajl);
+            puts("\nDone");
+        }
+        else {
+            puts("\n");
+            sch(bemeneti_fajl, stdout);
+        }
+        fclose(bemeneti_fajl);
     }
     else {
-        printf("Add meg a sztringet: ");
-        sch(stdin, stdout);
+        int valasztaschar;
+        printf("Fajlbol szeretnel beolvasni a szoveget? (i/n):");
+        valasztaschar = getchar();
+        while (valasztaschar != 'i' && valasztaschar != 'n') {
+            getchar(); // entert elnyeli
+            printf("Fajlbol szeretnel beolvasni a szoveget? (i/n):");
+            valasztaschar = getchar();
+        }
+        if (valasztaschar == 'i') {
+            char fajlnev[50];
+            printf("Adja meg a fajl nevet: ");
+            gets(fajlnev);
+            FILE *fajl = fopen(fajlnev, "rt");
+            sch(fajl, stdout);
+            fclose(fajl);
+        } else {
+            printf("Add meg a sztringet: ");
+            sch(stdin, stdout);
+        }
     }
 
     return  0;
