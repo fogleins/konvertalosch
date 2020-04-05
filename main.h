@@ -12,6 +12,6 @@ typedef enum Allapot {
     egyeb
 } Allapot;
 
-void sch(FILE* forras);
+void sch(FILE* forras, FILE* cel);
 
 #endif //KONVERTALOSCH_MAIN_H

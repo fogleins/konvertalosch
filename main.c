@@ -18,18 +18,18 @@ int main(int argc, char* args[]) {
         printf("Adja meg a fajl nevet: ");
         gets(fajlnev);
         FILE* fajl = fopen(fajlnev, "rt");
-        sch(fajl);
+        sch(fajl, stdout);
         fclose(fajl);
     }
     else {
         printf("Add meg a sztringet: ");
-        sch(stdin);
+        sch(stdin, stdout);
     }
 
     return  0;
 }
 
-void sch(FILE* forras) {
+void sch(FILE* forras, FILE* cel) {
     Allapot a = egyeb;
     int c;
     while ((c = getc(forras)) != EOF) {
@@ -41,7 +41,7 @@ void sch(FILE* forras) {
                     a = c_volt;
                 else if (c == 'z' || c == 'Z')
                     a = z_volt;
-                putchar(c);
+                putc(c, cel);
                 break;
             case s_volt:
                 switch (c) {
@@ -51,11 +51,11 @@ void sch(FILE* forras) {
                     case 'Z':
                         break;
                     default:
-                        puts("ch");
+                        fputs("ch", cel);
                         a = egyeb;
                         break;
                 }
-                putchar(c);
+                putc(c, cel);
                 break;
             case z_volt:
             case c_volt:
@@ -64,7 +64,7 @@ void sch(FILE* forras) {
                 else if (c == 'z' || c == 'Z')
                     a = z_volt;
                 else a = egyeb;
-                putchar(c);
+                putc(c, cel);
                 break;
         }
     }
